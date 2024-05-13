@@ -10,6 +10,7 @@ B) comparandolo con un compañero podriamos decir que no son exactamente iguales
 C) Lo que paso fue que cambio el valor final y el tiempo aumento debido a que tiene un retardo artificial tambien conocido como "delay"
 
 2A) CODIGO
+```
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,7 +67,8 @@ int main(int argc, char *argv[])
 
     pthread_mutex_destroy(&lock); // Destruir el mutex
     pthread_exit(NULL); // como los hilos que cree ya terminaron de ejecutarse, termino yo tambien.
-}
+} 
+```
 RESULTADO EN LA TERMINAL
 ![image](https://github.com/L-T0RO/ASO2024TPs/assets/159506610/a392e2a7-2bf6-4c36-a78a-b78966435373) ![image](https://github.com/L-T0RO/ASO2024TPs/assets/159506610/b58b1e34-28da-4a1d-a91c-99bc1ea91e84)
 

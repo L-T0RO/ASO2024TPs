@@ -16,42 +16,39 @@ C) Lo que paso fue que cambio el valor final y el tiempo aumento debido a que ti
 #include <stdlib.h>
 #define NUMBER_OF_THREADS 2
 #define CANTIDAD_INICIAL_HAMBURGUESAS 20
-
 int cantidad_restante_hamburguesas = CANTIDAD_INICIAL_HAMBURGUESAS;
-pthread_mutex_t lock; // Mutex para controlar el acceso a la variable compartida
-int turno = 0; // Variable para el turno de acceso
+int turno = 0;
 
-void *comer_hamburguesa(void *tid)
+void comer_hamburguesa(voidtid)
 {
-    while (1)
-    {
-        while(turno != (int)tid); // Esperar al turno
-        pthread_mutex_lock(&lock); // Bloquear la sección crítica
+    while (1 == 1)
+    { 
+        while (turno != (int) tid);
+        // INICIO DE LA ZONA CRÍTICA
         if (cantidad_restante_hamburguesas > 0)
         {
-            printf("Hola! soy el hilo (comensal) %d , me voy a comer una hamburguesa ! ya que todavia queda/n %d \n", (int) tid, cantidad_restante_hamburguesas);
+            printf("Hola! soy el hilo(comensal) %d , me voy a comer una hamburguesa ! ya que todavia queda/n %d \n", (int) tid, cantidad_restante_hamburguesas);
             cantidad_restante_hamburguesas--; // me como una hamburguesa
         }
         else
         {
-            printf("SE TERMINARON LAS HAMBURGUESAS :( \n");
-            pthread_mutex_unlock(&lock); // Desbloquear antes de salir de la función
+            printf("SE TERMINARON LAS HAMBURGUESAS 😦 \n");
+        turno = (turno + 1) % NUMBER_OF_THREADS;
             pthread_exit(NULL); // forzar terminacion del hilo
         }
-        turno = (turno + 1) % NUMBER_OF_THREADS; // Cambiar el turno
-        pthread_mutex_unlock(&lock); // Desbloquear la sección crítica
+        // SALIDA DE LA ZONA CRÍTICA
+turno = (turno + 1) % NUMBER_OF_THREADS;
     }
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char argv[])
 {
     pthread_t threads[NUMBER_OF_THREADS];
-    int status, ret;
-    pthread_mutex_init(&lock, NULL); // Inicializar el mutex
+    int status, i, ret;
     for (int i = 0; i < NUMBER_OF_THREADS; i++)
     {
         printf("Hola!, soy el hilo principal. Estoy creando el hilo %d \n", i);
-        status = pthread_create(&threads[i], NULL, comer_hamburguesa, (void *)i);
+        status = pthread_create(&threads[i], NULL, comer_hamburguesa, (void)i);
         if (status != 0)
         {
             printf("Algo salio mal, al crear el hilo recibi el codigo de error %d \n", status);
@@ -59,15 +56,14 @@ int main(int argc, char *argv[])
         }
     }
 
-    for (int i = 0; i < NUMBER_OF_THREADS; i++)
+    for (i = 0; i < NUMBER_OF_THREADS; i++)
     {
         void *retval;
         ret = pthread_join(threads[i], &retval); // espero por la terminacion de los hilos que cree
     }
-
-    pthread_mutex_destroy(&lock); // Destruir el mutex
     pthread_exit(NULL); // como los hilos que cree ya terminaron de ejecutarse, termino yo tambien.
-} 
+}
+
 ```
 RESULTADO EN LA TERMINAL
 ![image](https://github.com/L-T0RO/ASO2024TPs/assets/159506610/a392e2a7-2bf6-4c36-a78a-b78966435373) ![image](https://github.com/L-T0RO/ASO2024TPs/assets/159506610/b58b1e34-28da-4a1d-a91c-99bc1ea91e84)
@@ -77,6 +73,8 @@ RESULTADO EN LA TERMINAL
 2B) 
 
 IMAGEN
-![image](https://github.com/L-T0RO/ASO2024TPs/assets/159506610/f007e191-11c9-472d-864e-12454abf6173)
+![comensal A](https://github.com/L-T0RO/ASO2024TPs/assets/159506610/44ad8278-aeda-4794-bb1c-26320c37ea20)
+
+
 
 
